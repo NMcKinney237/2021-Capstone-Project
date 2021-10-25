@@ -17,7 +17,9 @@ We pulled our data from [RAVDESS](https://smartlaboratory.org/ravdess/), a datas
 ![](./Images/count_classes.png)
 
 
-- Standardized values within the entire dataframe:
+Along with our emotions, there are several other variables that are consistent through the RAVDESS dataset:
+
+- **Standardized values within the entire dataframe:**
     - **1st:  Modality** (03 = audio-only)
     - **2nd:  Vocal channel** (01 = speech)
     - **3rd:  Emotion** (01 = neutral, 02 = calm, 03 = happy, 04 = sad, 05 = angry, 06 = fearful, 07 = disgust, 08 = surprised)
@@ -43,6 +45,7 @@ The features we utilized are listed below:
 
 - **MFCC (Mel-Frequency Cepstral Coefficients):** 
     - MFCC, features represent phonemes (distinct units of sound) coming off of the vocal tract
+    
 - **MEL Spectrogram** 
     - The MEL scale is a scale that relates the perceived frequency of a tone to the actual measured frequency. If we were to look at, say, a land-line dial up, the mel scale would measure the distance between these sounds. The word mel comes from "melody".
     
@@ -65,13 +68,13 @@ Surprisingly, our baseline model performed better than our model with the additi
 
 To conclude, our model, while not quite ready for deployment, scores higher than our null hypothesis. Additionally, our baseline should be the primary model moving forward as we look to further improve the application.
 
-Our next steps are as follows:
+**Our next steps are as follows:**
 
-- Further data augmentation, with pitch and white noise, should improve our overall model scoring.
+- **Further data augmentation, with pitch and white noise, should improve our overall model scoring.**
     - Directly changing our files and adding layers like white noise can further standardize the data, which will benefit the model's ability to predict the differences between classes.
 
-- Adding 10,000 files from other data sources should give us better model fitting and better capabilities.
+- **Adding 10,000 files from other data sources should give us better model fitting and better capabilities.**
     - Adding more files to our neural net will increase the model's ability to effectively operate. The lack of data often leads to overfitting because the model tries to learn based on very few samples which are less diverse.
 
-- Further developing the web app out to include real-time predictions across the entire audio file, not just a sample, should allow students a seamless experience with the app.
+- **Further developing the web app out to include real-time predictions across the entire audio file, not just a sample, should allow students a seamless experience with the app.**
     - Adding video and real-time features that can evaluate a wider frame of audio and video will not only be more efficient, but it will allow users to see what type of habits are present in their communication styles.

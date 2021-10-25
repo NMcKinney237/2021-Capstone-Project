@@ -26,8 +26,8 @@ To conclude, our model, while not quite ready for deployment, scores higher than
 
 Our next steps are as follows
 
-- Further data augmentation, with pitch and white noise, should improve our overall model scoring.
+- **Further data augmentation, with pitch and white noise, should improve our overall model scoring.**
 
-- Adding 10,000 files from other data sources should give us better model fitting and better capabilities.
+- **Adding 10,000 files from other data sources should give us better model fitting and better capabilities.**
 
-- Further developing the web app out to include real-time predictions across the entire audio file, not just a sample, should allow students a seamless experience with the app.
+- **Further developing the web app out to include real-time predictions across the entire audio file, not just a sample, should allow students a seamless experience with the app.**
