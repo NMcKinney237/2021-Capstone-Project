@@ -15,16 +15,18 @@ from pydub import AudioSegment
 
 #Other libraries
 import os
-#from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model
 
 # load models
-#model = load_mo#del("chosen_model.h5")
+model = load_model("chosen_model.h5")
 
 # Functions
-Emotions = ['fear', 'angry', 'neutral', 'happy', 'sad', 'surprise']
+Emotions = ['Angry', 'Calm', 'Disgust', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Suprised']
 
 @st.cache
 def get_mfccs(audio, limit):
+    '''Get mccs feature into array. format first developed by Maria Startseva, 
+    Tal Baram, and Asher https://github.com/talbaram3192/Emotion_Recognition_project'''
     y, sr = librosa.load(audio, sr=22050)
     feat = librosa.feature.mfcc(y, sr=22050, n_mfcc = 40)
     if feat.shape[1] > limit:
@@ -34,18 +36,11 @@ def get_mfccs(audio, limit):
         mfccs[:, :feat.shape[1]] = feat
     return mfccs
 
-#@st.cache
-def get_title(predictions, categories=Emotions):
-    title = f"Emotion Prediction: {categories[predictions.argmax()]} \- {predictions.max() * 100:.2f}%"
-    return title
-
 
 def main():
 	
-    menu = ['Home'] #"About the model" "About the Developer", "Video"]
+    menu = ['Home']
     choice = st.sidebar.selectbox("Menu", menu)
-
-
 
     if choice == "Home":
         st.sidebar.title("Emotion Classifier App")
@@ -68,12 +63,11 @@ def main():
                 #save_audio(Audio_file)
 
                 wav, sr = librosa.load(Audio_file, sr=2200)
-            	#Xdb = get_melspec(path)[1]
 
                 mfccs = get_mfccs(path, model.input_shape[-1])
                 mfccs = mfccs.reshape(1, *mfccs.shape)
-            	#pred = model.predict(mfccs)[0]
-                title = f"Emotion Prediction: {categories[predictions.argmax()]} \- {predictions.max() * 100:.2f}%"
+            	pred = model.predict(mfccs)[0]
+                title = f"Emotion Prediction is: {categories[predictions.argmax()]} \- {predictions.max() * 100:.2f}%"
                 st.write(title)
 
 

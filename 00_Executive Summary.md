@@ -1,14 +1,33 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Neural Network Mini-hackathon Fashion MNIST 👗👔
+## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) GA Capstone: Executive Summary
 
-## Goal
+### Problem Statement
 
-Create the highest scoring model to classify clothing images!
+Our goal with this project is to provide students with a reasonable means of being able to record themselves and predict their tone and emotion in hopes that it benefits them as they prepare for technical interviews. In this, we hope to classify emotions off of audio data and develop a web app that can be utilized by other students. 
 
-Audio
-Audio has been used in prediction modeling for the better part of several years. In primary use cases, such as chatroom's and 
+A successful model would score higher than an average baseline metric of 12%, and we would include a fully functioning web app.
 
-Our chosen model, a CNN model analyzing the MCC (Mel-Frequency Cepstrum), scored 67% on our test data, which was higher than our our null baseline (12% chance of guessing an emotion correctly). 
+### Background
 
-Alzheimer's research
+Audio has been used in prediction modeling for the better part of several years. In primary use cases, audio can function similarly to text and visual feedback in that we can derive sentiment from it. In the market, 70% of managers expect negotiations to happen at the time of the offer, while only 46% and 34% of men and women take them up on it. We are looking to provide a means for our students to be fully equipped for their next interview opportunities.
 
-Alzheimer's disease is the most common influencer of dementia, as 62% of dementia cases are explained by the onset of Alzheimer's. Data suggests that current diagnostic effectiveness in the UK is less than ideal for this disease, and is in a position to be improved. In 2018, Alzheimer's Research UK indicated that the diagnosis of dementia was only 67% effective (Source), suggesting that a third of patients did not receive a correct diagnosis. In individual healthcare systems in the UK, the range on this diagnosis varies anywhere from 54% to 80% (Source), as privacy policies and a lack of communication between systems can limit a practitioner's ability to fully evaluate a patient. Machine learning can help hospitals better detect and diagnose Alzheimer’s disease so that people’s health conditions aren’t ignored and overlooked. Over the past two weeks, our dedicated team has worked to create algorithms that detect Alzheimer’s better than the medical system in the UK. With our models, we can improve treatment for patients and help hospitals give their patients a better quality of life. Our predictive models have demonstrated improved diagnostics compared to baseline predictions, with accuracy and recall scores that are higher than baseline scores to varying degrees. We have outperformed the standard rate of detection and are continuously working to make them better. Our most basic neural net (for binary classification) is 35 points above baseline accuracy (50%), and in terms of recall, scores are 20 points above UK averages (64%). However, the recall scoring as it related to false negatives (128 false negatives in our model results) was significantly higher than what would be comfortable for a model that has been deployed within hospitals but we will work to improve that over time. In terms of classifying the severity of symptoms, we chose the basic tuned model over pre-trained models and scored a uniform score of 72% on the accuracy, precision, and recall. This metric is also below what we would be comfortable with for a model that is deployed in UK hospitals, but is also higher than baseline predictions and is a place where we will work to improve. Our models are vastly better than the current standard in the UK. They may not be perfect, but with additional improvement and feature development before deployment, we will improve the detection rate of dementia in UK hospitals and help determine the severity of a patient's dementia.
+We pulled our data from RAVDESS, a dataset encompassing 1,440 files of actor-contributed snippets of audio data. This data is standardized and encompasses 8 ranges of emotions.
+
+### Modeling
+
+In our modeling process, we utilized a variety of audio classification features, choosing to model off of two subsets of features. One, a baseline that only involved MFCC data, the most common baseline metric for audio, while the other encompassed more features.
+
+Our chosen model, a CNN model analyzing the MCC (Mel-frequency Cepstrum), scored 67% on our test data, which was higher than our null baseline (12% chance of guessing an emotion correctly). This model is overfitting, however, and improvements must be made to the underlying audio data and model before it is to be deployed.
+
+Surprisingly, our baseline model performed better than our model with the additional features. However, both models tended to not be able to classify happiness and sadness to a great degree, which is the key indicator in an actual interview setting.
+
+### Conclusions and Recommendations
+
+To conclude, our model, while not quite ready for deployment, scores higher than our null hypothesis. Additionally, our baseline should be the primary model moving forward as we look to further improve the application.
+
+Our next steps are as follows
+
+- Further data augmentation, with pitch and white noise, should improve our overall model scoring.
+
+- Adding 10,000 files from other data sources should give us better model fitting and better capabilities.
+
+- Further developing the web app out to include real-time predictions across the entire audio file, not just a sample, should allow students a seamless experience with the app.
