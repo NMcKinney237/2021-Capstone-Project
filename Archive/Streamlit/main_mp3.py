@@ -1,0 +1,170 @@
+
+import streamlit as st
+
+import pandas as pd
+import numpy as np
+import time
+import librosa
+import librosa.display
+from pydub import AudioSegment
+import soundfile
+import wave
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from IPython.display import Audio as playback
+import os
+from keras import backend as K
+
+
+import joblib
+#from tensorflow.keras.models import load_model
+
+# Functions
+
+@st.cache(allow_output_mutation=True)
+def load_models():
+	model = load_model(MODEL_PATH)
+    model._make_predict_function()
+    model.summary()  # included to make it visible when model is reloaded
+    return model
+
+
+
+def get_MFCC(sr,audio):
+    
+    features = mfcc.mfcc(audio, sr, 0.025, 0.01, 13, appendEnergy = False)
+    features = preprocessing.scale(features)
+    return features
+
+def waveplot(Audio_File):
+    y, sr = librosa.load(Audio_File)
+ 	librosa.display.waveplot(y.numpy(), sr=sr, ax=ax1)
+	
+def convert_mp3(file):
+	sound = AudioSegment.from_mp3(Audio_file)
+	sound.export(Audio_file, format= "wav")
+	return st.audio(Audio_file, format='audio/mpeg')
+
+def extract(wav_file, t1, t2):
+	wav = AudioSegment.from_wav(wav_file)
+	wav = wav[1000*t1:1000*t2]
+	wav.export("extracted.wav", format='wav')
+
+def record_and_predict(gmm_male, gmm_female, sr=16000, channels=1, duration=3, filename='pred_record.wav'):
+    """
+    Records live voice and returns the identified gender
+    """ 
+    recording = sd.rec(int(duration * sr), samplerate=sr, channels=channels).reshape(-1)
+    sd.wait()
+    
+    features = get_MFCC(sr,recording)
+    scores = None
+
+    log_likelihood_male = np.array(gmm_male.score(features)).sum()
+    log_likelihood_female = np.array(gmm_female.score(features)).sum()
+
+    if log_likelihood_male >= log_likelihood_female:
+        return("Male")
+    else:
+        return("Female")
+
+
+
+def main():
+	
+	menu = ['Home'] #"About the model" "About the Developer", "Video"]
+	choice = st.sidebar.selectbox("Menu", menu)
+
+
+
+	if choice == "Home":
+		st.sidebar.title("Emotion Classifier App")
+
+		st.sidebar.markdown("This app predicts an emotion off of a given audio file")
+		st.sidebar.markdown("* **Data Source**: [Ravdess](https://smartlaboratory.org/ravdess/)")
+		st.sidebar.markdown("---")
+		st.sidebar.markdown("## Upload A File Below")
+
+
+		Audio_file = st.sidebar.file_uploader("Upload Audio", type=["wav"])
+		if Audio_file is not None:
+			#filedetails= {"FileName":Audio_file.name,"FileType":Audio_file.type,"FileSize":Audio_file}
+			#st.sidebar.write(filedetails)
+			st.sidebar.markdown("---")
+
+			if Audio_file.type == "audio/x-wav":
+
+				st.markdown('#')
+				st.write("Play File")
+				st.audio(Audio_file, format='audio/x-wav')
+
+				with open(os.path.join("Streamlit",Audio_file.name),"wb") as f:
+			  		f.write((Audio_file).getbuffer())
+			  		st.success("File Saved")
+
+		#st.sidebar.markdown("Or select a sample file here:")
+		#selected_provided_file = st.sidebar.selectbox(label="", options=["Cow", "Dog", "Thunder"])
+
+
+
+
+
+
+
+
+
+    		#if st.button("Start Prediction"):
+    			#with st.spinner("Recording..."):
+        			#emotion = record_and_predict(gmm_male, gmm_female, duration=duration)
+        			#st.write("The identified emotion is: " + emotion)
+
+			
+
+
+
+		#def load_model():
+			#model_eval = load_model('models/chosen_model.h5')
+			#model_eval._make_predict_function()
+			#model_eval.summary()
+			#return model_eval
+
+		
+
+	elif choice == "About the Developer":
+		st.title("About Me")
+		
+		
+		url = "https://media-exp1.licdn.com/dms/image/C5603AQGZLOUBQjL_ng/profile-displayphoto-shrink_200_200/0/1579289639226?e=1640217600&v=beta&t=xMdbiLY25vWtlfEigDeDKwebrpLmTdVYROGG5aV-j8A"
+		st.image(url, caption=url, width=200)
+		st.header("Nathan McKinney")
+
+
+	elif choice == "Vieo":
+		
+		def shorten_vid_option(opt):
+			return opt.split("/")[-1]
+
+
+		st.subheader("Video")
+		vidurl = st.selectbox(
+    		"Pick a video to play",
+        	("https://youtu.be/_T8LGqJtuGc", 
+        	"https://www.youtube.com/watch?v=kmfC-i9WgH0",
+        	"https://www.youtube.com/embed/sSn4e1lLVpA"),
+        	0, 
+        	shorten_vid_option)
+
+		st.video(vidurl)
+
+	#else:
+		#st.subheader("Modeling Process")
+
+
+if __name__ == '__main__':
+st.title('My first app')
+sentence = st.text_input('Input your sentence here:')
+model= load_model()
+if sentence:
+	y_hat = model.predict(sentence)
+
