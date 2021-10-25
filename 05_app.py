@@ -66,7 +66,7 @@ def main():
 
                 mfccs = get_mfccs(path, model.input_shape[-1])
                 mfccs = mfccs.reshape(1, *mfccs.shape)
-            	pred = model.predict(mfccs)[0]
+                pred = model.predict(mfccs)[0]
                 title = f"Emotion Prediction is: {categories[predictions.argmax()]} \- {predictions.max() * 100:.2f}%"
                 st.write(title)
 
